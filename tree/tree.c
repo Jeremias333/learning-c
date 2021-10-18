@@ -53,22 +53,71 @@ NoArv* buscar_arvore(NoArv *raiz, int num){
     return NULL;
 }
 
+int altura_arvore(NoArv *raiz){
+    if(raiz == NULL){
+        return -1;
+    }else{
+        int esq = altura_arvore(raiz->esquerda);
+        int dir = altura_arvore(raiz->direita);
+
+        if(esq > dir){
+            return esq + 1;
+        }else{
+            return dir + 1;
+        }
+    }
+}
+
+int cont_no(NoArv *raiz){
+    if (raiz == NULL){
+        return 0;
+    }else{
+        return 1 + cont_no(raiz->esquerda) + cont_no(raiz->direita);
+    }
+}
+
 int main(){
 
     NoArv *raiz = NULL;
 
-    raiz = inserir_versao_1(raiz, 100);
-    raiz = inserir_versao_1(raiz, 50);
-    raiz = inserir_versao_1(raiz, 25);
-    raiz = inserir_versao_1(raiz, 30);
+    // raiz = inserir_versao_1(raiz, 100);
+    // raiz = inserir_versao_1(raiz, 50);
+    // raiz = inserir_versao_1(raiz, 25);
+    // raiz = inserir_versao_1(raiz, 30);
+    raiz = inserir_versao_1(raiz, 12);
+    raiz = inserir_versao_1(raiz, 7);
+    raiz = inserir_versao_1(raiz, 3);
+    raiz = inserir_versao_1(raiz, 10);
+    raiz = inserir_versao_1(raiz, 11);
+    raiz = inserir_versao_1(raiz, 23);
+    raiz = inserir_versao_1(raiz, 17);
+    raiz = inserir_versao_1(raiz, 31);
+    // raiz = inserir_versao_1(raiz, 1);
+
 
     print_arvore(raiz);
     printf("\nImprimindo em ordem\n");
     print_arvore_ordenada(raiz);
+    printf("\n");
 
-    raiz = buscar_arvore(raiz, 50);
+    printf("\nAltura da árvore: %d\n", altura_arvore(raiz));
 
-    printf("Buscando valor: %d ", raiz->valor);
+    int valor_busca = 10;
+    NoArv *raiz_busca = buscar_arvore(raiz, valor_busca);
+
+    if(raiz_busca == NULL){
+        printf("Valor %d não encontrado na árvore\n", valor_busca);
+    }else{
+        printf("Encontrou o valor: %d nesta árvore\n", raiz_busca->valor);
+    }
+
+    int quant = cont_no(raiz);
+
+    if(raiz == NULL){
+        printf("A árvore não possui nós\n");
+    }else{
+        printf("Essa árvore possui: %d nós\n", quant);
+    }
 
     return 0;
 }
